@@ -1,3 +1,4 @@
 node_modules
 packages.docx
 backend/config/config.env
+backend/route.rest
