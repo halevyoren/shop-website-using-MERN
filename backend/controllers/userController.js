@@ -2,6 +2,7 @@ const User = require('../models/user');
 
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const ErrorHandler = require('../utils/errorHandler');
+const sendToken = require('../utils/jwtToken');
 
 // @route   POST api/products
 // @desc    Register a user
@@ -20,12 +21,7 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
     }
   });
 
-  const token = getJwtToken();
-
-  res.status(201).json({
-    success: true,
-    token
-  });
+  sendToken(user, 200, res);
 });
 
 // @route   POST api/products
@@ -55,12 +51,7 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler('Mail and password do not match', 401));
   }
 
-  const token = user.getJwtToken();
-
-  res.status(200).json({
-    success: true,
-    token
-  });
+  sendToken(user, 200, res);
 });
 
 exports.registerUser = registerUser;
