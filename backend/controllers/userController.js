@@ -188,7 +188,7 @@ const updateProfile = catchAsyncErrors(async (req, res, next) => {
 
   // TODO: Update avatar
 
-  const use = await User.findByIdAndUpdate(req.user.id, newUserData, {
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
     useFindAndModify: false
@@ -210,7 +210,7 @@ const getAllUsers = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     users
-  })
+  });
 });
 
 // @route   GET api/admin/user/:user_id
@@ -219,14 +219,66 @@ const getAllUsers = catchAsyncErrors(async (req, res, next) => {
 const getUserById = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.user_id);
 
-  if(!user){
-    return next(new ErrorHandler(`Could not find user with the following id: ${req.params.user_id}`))
+  if (!user) {
+    return next(
+      new ErrorHandler(
+        `Could not find user with the following id: ${req.params.user_id}`,
+        404
+      )
+    );
   }
 
   res.status(200).json({
     success: true,
     user
-  })
+  });
+});
+
+// @route   PUT api/admin/user/:user_id
+// @desc    Update user profile
+// @access  admin
+const updateUser = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role
+  };
+
+  // TODO: Update avatar
+
+  const user = await User.findByIdAndUpdate(req.params.user_id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false
+  });
+
+  res.status(200).json({
+    success: true
+  });
+});
+
+// @route   DELETE api/admin/user/:user_id
+// @desc    Delete user by id
+// @access  admin
+const deleteUserById = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.user_id);
+
+  if (!user) {
+    return next(
+      new ErrorHandler(
+        `Could not find user with the following id: ${req.params.user_id}`,
+        404
+      )
+    );
+  }
+
+  // TODO - remove avatar from cloudinary
+
+  await user.remove();
+
+  res.status(200).json({
+    success: true
+  });
 });
 
 exports.registerUser = registerUser;
@@ -239,3 +291,5 @@ exports.updatePassword = updatePassword;
 exports.updateProfile = updateProfile;
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
+exports.updateUser = updateUser;
+exports.deleteUserById = deleteUserById;
