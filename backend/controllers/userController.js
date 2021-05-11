@@ -132,6 +132,18 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
+// @route   GET api/me
+// @desc    Get currently logged in user details
+// @access  private
+const getUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    success: true,
+    user
+  });
+});
+
 // @route   GET api/logout
 // @desc    Logout user
 // @access  Public
@@ -151,4 +163,5 @@ exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.forgotPassword = forgotPassword;
 exports.resetPassword = resetPassword;
+exports.getUserProfile = getUserProfile;
 exports.logout = logout;
