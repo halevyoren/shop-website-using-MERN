@@ -46,6 +46,8 @@ const getProductById = catchAsyncErrors(async (req, res, next) => {
 // @desc    Creating new product
 // @access  Private
 const newProduct = catchAsyncErrors(async (req, res, next) => {
+  req.body.user = req.user.id;
+
   const product = await Product.create(req.body);
 
   res.status(201).json({
