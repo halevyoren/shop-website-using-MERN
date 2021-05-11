@@ -4,7 +4,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const ErrorHandler = require('../utils/errorHandler');
 const sendToken = require('../utils/jwtToken');
 
-// @route   POST api/products
+// @route   POST api/register
 // @desc    Register a user
 // @access  Public
 const registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -24,10 +24,9 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// @route   POST api/products
+// @route   POST api/login
 // @desc    Login user
 // @access  Public
-
 const loginUser = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -54,5 +53,21 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
+// @route   GET api/products
+// @desc    Logout user
+// @access  Public
+const logout = catchAsyncErrors(async (req, res, next) => {
+  res.cookie('token', null, {
+    expires: new Date(Date.now()),
+    httpOnly: true
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'Loged out'
+  });
+});
+
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
+exports.logout = logout;
