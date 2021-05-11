@@ -55,6 +55,21 @@ const loginUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
+// @route   GET api/logout
+// @desc    Logout user
+// @access  Public
+const logout = catchAsyncErrors(async (req, res, next) => {
+  res.cookie('token', null, {
+    expires: new Date(Date.now()),
+    httpOnly: true
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'Loged out'
+  });
+});
+
 // @route   POST api/password/forgot
 // @desc    Recovery mail to reset password
 // @access  Public
@@ -162,25 +177,33 @@ const updatePassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// @route   GET api/logout
-// @desc    Logout user
-// @access  Public
-const logout = catchAsyncErrors(async (req, res, next) => {
-  res.cookie('token', null, {
-    expires: new Date(Date.now()),
-    httpOnly: true
+// @route   PUT api/password/update
+// @desc    Update profile
+// @access  private
+const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email
+  };
+
+  // TODO: Update avatar
+
+  const use = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false
   });
 
   res.status(200).json({
-    success: true,
-    message: 'Loged out'
+    success: true
   });
 });
 
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
+exports.logout = logout;
 exports.forgotPassword = forgotPassword;
 exports.resetPassword = resetPassword;
 exports.getUserProfile = getUserProfile;
 exports.updatePassword = updatePassword;
-exports.logout = logout;
+exports.updateProfile = updateProfile;
