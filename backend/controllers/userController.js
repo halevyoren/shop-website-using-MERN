@@ -199,6 +199,36 @@ const updateProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// -------- Admin routes ----------
+
+// @route   GET api/admin/users
+// @desc    Get all users
+// @access  admin
+const getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    success: true,
+    users
+  })
+});
+
+// @route   GET api/admin/user/:user_id
+// @desc    Get user by id
+// @access  admin
+const getUserById = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.user_id);
+
+  if(!user){
+    return next(new ErrorHandler(`Could not find user with the following id: ${req.params.user_id}`))
+  }
+
+  res.status(200).json({
+    success: true,
+    user
+  })
+});
+
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
 exports.logout = logout;
@@ -207,3 +237,5 @@ exports.resetPassword = resetPassword;
 exports.getUserProfile = getUserProfile;
 exports.updatePassword = updatePassword;
 exports.updateProfile = updateProfile;
+exports.getAllUsers = getAllUsers;
+exports.getUserById = getUserById;

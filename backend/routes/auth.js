@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { isAuthenticatedUser } = require('../middlewares/auth');
+const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 const {
   registerUser,
@@ -10,7 +10,10 @@ const {
   forgotPassword,
   resetPassword,
   getUserProfile,
-  updatePassword,updateProfile
+  updatePassword,
+  updateProfile,
+  getAllUsers,
+  getUserById
 } = require('../controllers/userController');
 
 router.route('/register').post(registerUser);
@@ -23,5 +26,12 @@ router.route('/password/reset/:token').post(resetPassword);
 router.route('/me').get(isAuthenticatedUser, getUserProfile);
 router.route('/me/update').put(isAuthenticatedUser, updateProfile);
 router.route('/password/update').put(isAuthenticatedUser, updatePassword);
+
+router
+  .route('/admin/users')
+  .get(isAuthenticatedUser, authorizeRoles('admin'), getAllUsers);
+router
+  .route('/admin/user/:user_id')
+  .get(isAuthenticatedUser, authorizeRoles('admin'), getUserById);
 
 module.exports = router;
