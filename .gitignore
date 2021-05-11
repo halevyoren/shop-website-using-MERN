@@ -3,3 +3,4 @@ packages.docx
 backend/config/config.env
 backend/route.rest
 backend/data
+~$*.docx*
