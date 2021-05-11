@@ -144,6 +144,24 @@ const getUserProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route   PUT api/password/update
+// @desc    Update password
+// @access  private
+const updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('+password');
+
+  // Checking previous password
+  const isMatched = await user.comparePassword(req.body.oldPassword);
+  if (!isMatched) {
+    return next(new ErrorHandler('Old password is incorrect'));
+  }
+
+  user.password = req.body.password;
+  await user.save();
+
+  sendToken(user, 200, res);
+});
+
 // @route   GET api/logout
 // @desc    Logout user
 // @access  Public
@@ -164,4 +182,5 @@ exports.loginUser = loginUser;
 exports.forgotPassword = forgotPassword;
 exports.resetPassword = resetPassword;
 exports.getUserProfile = getUserProfile;
+exports.updatePassword = updatePassword;
 exports.logout = logout;
