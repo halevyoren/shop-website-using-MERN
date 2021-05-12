@@ -67,6 +67,23 @@ const getUserOrders = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route   GET api/orders/admin
+// @desc    Get all orders
+// @access  admin
+const getAllOrders = catchAsyncErrors(async (req, res, next) => {
+  const orders = await Order.find();
+
+  let totalAmount = 0;
+  orders.forEach((order) => (totalAmount += order.totalPrice));
+
+  res.status(200).json({
+    success: true,
+    totalAmount,
+    orders
+  });
+});
+
 exports.newOrder = newOrder;
 exports.getOrderById = getOrderById;
 exports.getUserOrders = getUserOrders;
+exports.getAllOrders = getAllOrders;
