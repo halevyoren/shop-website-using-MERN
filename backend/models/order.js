@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
   shippingInfo: {
-    adresses: {
+    address: {
       type: String,
       required: true
     },
@@ -24,7 +24,7 @@ const orderSchema = new mongoose.Schema({
     }
   },
   user: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'User'
   },
@@ -47,13 +47,14 @@ const orderSchema = new mongoose.Schema({
         required: true
       },
       product: {
-        type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Product'
       }
     }
   ],
   paymentInfo: {
+    //   id of payment such as paypal or stripe
     id: {
       type: String
     },
@@ -67,7 +68,7 @@ const orderSchema = new mongoose.Schema({
   itemsPrice: {
     type: Number,
     required: true,
-    default: 0.0
+    default: 1.0
   },
   taxPrice: {
     type: Number,
