@@ -138,9 +138,28 @@ const createReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route   GET api/products/reviews
+// @desc    Get product reviews
+// @access  Private
+const getProductReviews = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.query.id);
+
+  if (!product) {
+    return next(new ErrorHandler('Product not found', 404));
+  }
+
+  const reviews = product.reviews;
+
+  res.status(200).json({
+    success: true,
+    reviews
+  });
+});
+
 exports.getProducts = getProducts;
 exports.newProduct = newProduct;
 exports.getProductById = getProductById;
 exports.updateProduct = updateProduct;
 exports.deleteProduct = deleteProduct;
 exports.createReview = createReview;
+exports.getProductReviews = getProductReviews;
