@@ -96,8 +96,51 @@ const deleteProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route   POST api/review
+// @desc    Creating new review
+// @access  Private
+const createReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment, productId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment
+  };
+
+  const product = await Product.findById(productId);
+
+  // checking if user has already created a review for this product
+  const isReviewed = product.reviews.find(
+    (review) => review.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    product.reviews.forEach((review) => {
+      if (review.user.toString() === req.user._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    product.reviews.push(review);
+    product.numberOfReviews = product.reviews.length;
+  }
+  product.ratings =
+    product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    product.reviews.length;
+
+  product.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true
+  });
+});
+
 exports.getProducts = getProducts;
 exports.newProduct = newProduct;
 exports.getProductById = getProductById;
 exports.updateProduct = updateProduct;
 exports.deleteProduct = deleteProduct;
+exports.createReview = createReview;

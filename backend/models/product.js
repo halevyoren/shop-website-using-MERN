@@ -67,7 +67,11 @@ const productSchema = new mongoose.Schema({
   },
   reviews: [
     {
-      //   this will change to user once its model will be made
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+      },
       name: {
         type: String,
         required: true
