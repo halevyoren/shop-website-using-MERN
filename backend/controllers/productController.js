@@ -131,7 +131,7 @@ const createReview = catchAsyncErrors(async (req, res, next) => {
     product.reviews.reduce((acc, item) => item.rating + acc, 0) /
     product.reviews.length;
 
-  product.save({ validateBeforeSave: false });
+  await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true
@@ -156,6 +156,46 @@ const getProductReviews = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route   DELETE api/products/review
+// @desc    Delete product review
+// @access  Private
+const deleteReview = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.findById(req.query.productId);
+
+  if (!product) {
+    return next(new ErrorHandler('Product not found', 404));
+  }
+
+  const reviews = product.reviews.filter(
+    (review) => review._id.toString() !== req.query.reviewId.toString()
+  );
+
+  const numberOfReviews = reviews.length;
+
+  const ratings =
+    reviews.length === 0
+      ? null
+      : reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length;
+
+  await Product.findByIdAndUpdate(
+    req.query.productId,
+    {
+      reviews,
+      ratings,
+      numberOfReviews
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false
+    }
+  );
+
+  res.status(200).json({
+    success: true
+  });
+});
+
 exports.getProducts = getProducts;
 exports.newProduct = newProduct;
 exports.getProductById = getProductById;
@@ -163,3 +203,4 @@ exports.updateProduct = updateProduct;
 exports.deleteProduct = deleteProduct;
 exports.createReview = createReview;
 exports.getProductReviews = getProductReviews;
+exports.deleteReview = deleteReview;
