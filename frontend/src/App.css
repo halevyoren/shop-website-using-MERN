@@ -1,0 +1,32 @@
+.logo img {
+  max-width: 200px;
+}
+.search_btn {
+  background-color: orange;
+  color: white;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.search_bar {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.nav_cart {
+  color: white;
+}
+
+.nav_cart_item_count {
+  background-color: orange;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.2rem;
+  color: black;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.input-group {
+  width: 90%;
+  margin-right: 35%;
+}
