@@ -6,7 +6,7 @@ const APIFeatures = require('../utils/apiFeatures');
 // @route   GET api/products
 // @desc    Getting all products
 // @access  Public
-const getProducts = async (req, res, next) => {
+const getProducts = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = 4;
 
   const productCount = await Product.countDocuments();
@@ -23,7 +23,7 @@ const getProducts = async (req, res, next) => {
     productCount,
     products
   });
-};
+});
 
 // @route   GET api/products/:product_id
 // @desc    Get product by id
