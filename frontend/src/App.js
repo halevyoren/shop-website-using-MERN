@@ -1,18 +1,23 @@
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 import Home from './components/Home';
 
-import './style.css';
+import './App.css';
 
 function App() {
   return (
-    <div className='App'>
-      <Header />
-      <Home />
-      <Footer />
-    </div>
+    <Router>
+      <div className='App'>
+        <Header />
+        <div className='container container-fluid'>
+          <Route path='/' exact component={Home} />
+        </div>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
