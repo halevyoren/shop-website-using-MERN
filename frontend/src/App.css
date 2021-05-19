@@ -32,5 +32,58 @@
 }
 
 .card.product-card {
+  display: flex;
+  align-items: center;
   width: 14rem;
+}
+
+.card-img-top {
+  width: 14rem;
+  height: 200px;
+}
+
+.product-card a {
+  color: black;
+}
+
+.loading-spinner img {
+  width: 300px;
+  margin: 6rem auto;
+  display: block;
+}
+
+.stockCounter input {
+  border: none;
+  width: 3rem;
+  text-align: center;
+  background-color: white;
+}
+
+.add-to-cart-btn,
+.submit-review-btn {
+  border-radius: 20px;
+  background-color: orange;
+  border-color: orange;
+  padding: auto;
+}
+
+.product-details img {
+  max-width: 100%;
+  min-width: 20rem;
+  height: auto;
+}
+
+.red-color {
+  color: red;
+}
+
+.green-color {
+  color: green;
+}
+
+.card-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 13rem;
 }
