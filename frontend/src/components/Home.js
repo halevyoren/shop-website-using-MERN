@@ -1,4 +1,6 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import Pagination from 'react-js-pagination';
+
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
@@ -11,8 +13,9 @@ import LoadingSpinner from './layout/LoadingSpinner';
 const Home = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { loading, products, error, productsCount } = useSelector(
+  const { loading, products, error, productCount, resPerPage } = useSelector(
     (state) => state.products
   );
 
@@ -20,8 +23,12 @@ const Home = () => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getAllProducts());
-  }, [dispatch, error, alert]);
+    dispatch(getAllProducts(currentPage));
+  }, [dispatch, error, alert, currentPage]);
+
+  const setCurrentPageNum = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Fragment>
@@ -32,13 +39,29 @@ const Home = () => {
           <Helmet>
             <title>The best store online - Oren's Shop</title>
           </Helmet>
-          <h1 className='mt-4 mb-5'>Home Page!</h1>
+          <h1 className='mt-4 mb-5'>Last Products</h1>
           <Row className='justify-content-center'>
             {products &&
               products.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
           </Row>
+          {resPerPage <= productCount && (
+            <div className='d-flex justify-content-center mt-5'>
+              <Pagination
+                activePage={currentPage}
+                itemsCountPerPage={resPerPage}
+                totalItemsCount={productCount || 1}
+                onChange={setCurrentPageNum}
+                nextPageText={'Next'}
+                prevPageText={'Prev'}
+                firstPageText={'First'}
+                lastPageText={'Last'}
+                itemClass='page-item'
+                linkClass='page-link'
+              />
+            </div>
+          )}
         </div>
       )}
     </Fragment>
