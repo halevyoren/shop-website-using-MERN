@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Button, Col } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
+import LogoImg from '../../images/shop-logo.jpg';
 const Header = () => {
   return (
     <Navbar
@@ -10,8 +11,8 @@ const Header = () => {
       variant='dark'
       className='p-0'
     >
-      <Navbar.Brand href='#home' className='logo'>
-        <img src='/images/shop-logo.jpg' alt='' />
+      <Navbar.Brand href='/' className='logo'>
+        <img src={LogoImg} alt='' />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
