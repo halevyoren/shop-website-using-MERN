@@ -14,7 +14,8 @@ export const getAllProducts = (
   keyword = '',
   currentPage = 1,
   priceRange,
-  category
+  category,
+  minRating = 0
 ) => async (dispatch) => {
   try {
     dispatch({
@@ -26,7 +27,7 @@ export const getAllProducts = (
     // if there are chosen categorys the show only them
     const categoryFilter = category ? `&category=${category}` : '';
 
-    const link = `/api/products?keyword=${keyword}&page=${currentPage}&price[gte]=${priceRange[0]}${maxPrice}${categoryFilter}`;
+    const link = `/api/products?keyword=${keyword}&page=${currentPage}&price[gte]=${priceRange[0]}${maxPrice}${categoryFilter}&ratings[gte]=${minRating}`;
 
     const { data } = await axios.get(link);
 

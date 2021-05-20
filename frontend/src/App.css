@@ -102,3 +102,17 @@
 .products-filtered {
   width: 70%;
 }
+.rating-text {
+  font-size: 1.5rem;
+  font-family: 'Open Sans', Arial, 'Helvetica', sans-serif, 'Heiti';
+  /* align-items:` */
+}
+
+.all-ratings-text {
+  color: rgb(140, 140, 255);
+}
+
+.all-ratings-text:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

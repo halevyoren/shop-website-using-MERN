@@ -179,7 +179,7 @@ const deleteReview = catchAsyncErrors(async (req, res, next) => {
 
   const ratings =
     reviews.length === 0
-      ? null
+      ? 0
       : reviews.reduce((acc, item) => item.rating + acc, 0) / reviews.length;
 
   await Product.findByIdAndUpdate(
