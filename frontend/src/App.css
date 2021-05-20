@@ -41,8 +41,10 @@
 }
 
 .card-img-top {
-  width: 14rem;
+  width: auto;
   height: 200px;
+  max-width: 14rem;
+  /* max-height: 200px; */
 }
 
 .product-card a {
