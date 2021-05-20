@@ -10,13 +10,25 @@ import {
 } from '../constants/productConstants';
 
 // Get all products
-export const getAllProducts = (currentPage = 1) => async (dispatch) => {
+export const getAllProducts = (
+  keyword = '',
+  currentPage = 1,
+  priceRange,
+  category
+) => async (dispatch) => {
   try {
     dispatch({
       type: GET_ALL_PRODUCTS_REQUEST
     });
+    // if max price is 1000$ then show all prices above 1000$ as well
+    const maxPrice = priceRange[1] < 1000 ? `&price[lte]=${priceRange[1]}` : '';
 
-    const { data } = await axios.get(`/api/products?page=${currentPage}`);
+    // if there are chosen categorys the show only them
+    const categoryFilter = category ? `&category=${category}` : '';
+
+    const link = `/api/products?keyword=${keyword}&page=${currentPage}&price[gte]=${priceRange[0]}${maxPrice}${categoryFilter}`;
+
+    const { data } = await axios.get(link);
 
     dispatch({
       type: GET_ALL_PRODUCTS_SUCCESS,
