@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Button, Col } from 'react-bootstrap';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import Search from './Search';
 import LogoImg from '../../images/shop-logo.jpg';
 const Header = () => {
@@ -22,7 +22,9 @@ const Header = () => {
         </Col>
         <Col md='2'>
           <div className='text-center d-flex align-items-center justify-content-center p-2'>
-            <Button className='bg-warning border-0'>Login</Button>
+            <Link to='/login'>
+              <Button className='login-btn border-0'>Login</Button>
+            </Link>
             <span className='ml-3 nav_cart'>Cart</span>
             <span className='ml-1 nav_cart_item_count'>10</span>
           </div>
