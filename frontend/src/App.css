@@ -1,3 +1,6 @@
+.container.container-fluid {
+  margin: 3rem;
+}
 .logo img {
   max-width: 200px;
 }
@@ -86,4 +89,16 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 13rem;
+}
+
+.home-page .col-md-3 {
+  min-width: 15rem;
+}
+.filters li {
+  cursor: pointer;
+  list-style: none;
+}
+
+.products-filtered {
+  width: 70%;
 }

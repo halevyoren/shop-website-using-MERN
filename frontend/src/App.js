@@ -13,8 +13,9 @@ function App() {
     <Router>
       <div className='App'>
         <Header />
-        <div className='container container-fluid'>
+        <div className='m-5'>
           <Route path='/' exact component={Home} />
+          <Route path='/search/:keyword' component={Home} />
           <Route path='/products/:id' exact component={ProductDetails} />
         </div>
         <Footer />

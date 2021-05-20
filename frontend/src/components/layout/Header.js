@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Button, Col } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
+import { Route } from 'react-router-dom';
+import Search from './Search';
 import LogoImg from '../../images/shop-logo.jpg';
 const Header = () => {
   return (
@@ -17,19 +18,7 @@ const Header = () => {
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
         <Col>
-          <div className='input-group m-auto p-2'>
-            <input
-              type='text'
-              id='search_field'
-              className='form-control'
-              placeholder='Enter Product Name ...'
-            />
-            <div className='input-group-append'>
-              <Button variant='outline-info' className='search_btn border-0'>
-                <FaSearch size='1.3rem' />
-              </Button>
-            </div>
-          </div>
+          <Route render={({ history }) => <Search history={history} />} />
         </Col>
         <Col md='2'>
           <div className='text-center d-flex align-items-center justify-content-center p-2'>
