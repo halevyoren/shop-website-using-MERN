@@ -29,7 +29,10 @@ const Login = ({ history }) => {
       history.push('/');
     }
     if (error) {
-      alert.error(error);
+      if (error !== 'Login in oder to access this resource') {
+        alert.error(error);
+      }
+
       dispatch(clearErrors());
     }
   }, [alert, dispatch, error, history, isAuthenticated]);
