@@ -139,3 +139,20 @@
 .login-form a {
   color: gray;
 }
+
+.custom-file-input,
+.custom-file-label {
+  position: relative;
+}
+
+.file-upload {
+  height: 100%;
+}
+
+.figure {
+  margin: 0;
+}
+
+.custom-file-label {
+  width: 100%;
+}

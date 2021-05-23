@@ -50,7 +50,7 @@ const Login = ({ history }) => {
             >
               <h1>Login</h1>
               <Form.Group controlId='formGroupEmail'>
-                <Form.Label>Email address</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <Form.Control
                   type='email'
                   placeholder='Enter email'
