@@ -62,7 +62,10 @@ const Header = () => {
                     alt={user && user.name}
                   />
                   &nbsp; &nbsp;
-                  <Figure.Caption className='text-white'>
+                  <Figure.Caption
+                    className='text-white'
+                    style={{ 'font-size': '1.2rem' }}
+                  >
                     {user && user.name && user.name.split(' ')[0]}
                   </Figure.Caption>
                 </Figure>
