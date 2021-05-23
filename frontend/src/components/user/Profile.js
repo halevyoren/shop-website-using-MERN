@@ -25,8 +25,8 @@ const Profile = () => {
                   width={250}
                   height={250}
                   className='rounded-circle img-fluid avatar center'
-                  alt={user && user.name}
-                  src={user && user.avatar && user.avatar.url}
+                  alt={user.name}
+                  src={user.avatar.url}
                 />
                 <Figure.Caption>
                   <Link
