@@ -184,7 +184,7 @@ const updatePassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-// @route   PUT api/password/update
+// @route   PUT api/me/update/
 // @desc    Update profile
 // @access  private
 const updateProfile = catchAsyncErrors(async (req, res, next) => {
