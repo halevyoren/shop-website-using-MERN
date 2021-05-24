@@ -93,9 +93,7 @@ const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // Create reset password url
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/password/reset/${resetToken}`;
+  const resetURL = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
 
   const message = `Your password reset token is as follow:\n\n${resetURL}\n\nIf you have not requested this email, than ignore it.`;
 
@@ -119,7 +117,7 @@ const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-// @route   POST api/password/reset/:token
+// @route   POST password/reset/:token
 // @desc    Reset password
 // @access  Public
 const resetPassword = catchAsyncErrors(async (req, res, next) => {
@@ -199,7 +197,7 @@ const updateProfile = catchAsyncErrors(async (req, res, next) => {
 
     // Remove last image from cloudinary
     const image_id = user.avatar.public_id;
-    const res = await cloudinary.v2.uploader.destroy(image_id)
+    const res = await cloudinary.v2.uploader.destroy(image_id);
 
     // Upload new image
     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
@@ -211,7 +209,7 @@ const updateProfile = catchAsyncErrors(async (req, res, next) => {
     newUserData.avatar = {
       public_id: result.public_id,
       url: result.secure_url
-    }
+    };
   }
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
