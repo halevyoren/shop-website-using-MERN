@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart } from '../../actions/cartActions';
+import { addItemToCart, removeItemFromCart } from '../../actions/cartActions';
 import { FaTrashAlt } from 'react-icons/fa';
 import { Button, Col, Row } from 'react-bootstrap';
 
@@ -10,6 +10,10 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector((state) => state.cart);
+
+  const removeItemHandler = (id) => {
+    dispatch(removeItemFromCart(id));
+  };
 
   const increaseQuantity = (id, quantity, stock) => {
     const newQuantity = quantity + 1;
@@ -36,8 +40,8 @@ const Cart = () => {
 
           <Row className='d-flex justify-content-between'>
             <Col xs={12} lg={8}>
-              {cartItems.map((item, index) => (
-                <Fragment key={index}>
+              {cartItems.map((item) => (
+                <Fragment key={item.product}>
                   <hr />
 
                   <div className='cart-item'>
@@ -122,7 +126,12 @@ const Cart = () => {
                         xs={{ span: 6, offset: 5 }}
                         className='mt-4 mt-lg-0'
                       >
-                        <FaTrashAlt color='red' />
+                        <FaTrashAlt
+                          color='red'
+                          onClick={() => {
+                            removeItemHandler(item.product);
+                          }}
+                        />
                       </Col>
                     </Row>
                   </div>
@@ -147,12 +156,12 @@ const Cart = () => {
 
                 <hr />
                 <div className='d-flex justify-content-center'>
-                  <button
+                  <Button
                     id='checkout_btn'
                     className='btn cart-btn px-5 py-2 text-white'
                   >
                     Check out
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
