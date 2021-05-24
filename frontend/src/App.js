@@ -10,6 +10,7 @@ import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Profile from './components/user/Profile';
 import UpdateProfile from './components/user/UpdateProfile';
+import UpdatePassword from './components/user/UpdatePassword';
 
 import ProtectedRoute from './components/route/ProtectedRoute';
 
@@ -35,6 +36,11 @@ function App() {
           <Route path='/register' exact component={Register} />
           <ProtectedRoute path='/me' exact component={Profile} />
           <ProtectedRoute path='/me/update' exact component={UpdateProfile} />
+          <ProtectedRoute
+            path='/password/update'
+            exact
+            component={UpdatePassword}
+          />
         </div>
         <Footer />
       </div>
