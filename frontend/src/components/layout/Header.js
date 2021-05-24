@@ -14,6 +14,7 @@ const Header = () => {
   const dispatch = useDispatch();
 
   const { user, loading } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -43,7 +44,7 @@ const Header = () => {
           {/* <div className='text-center d-flex align-items-center justify-content-center py-2'> */}
           <Link to='/cart' className='cart-link'>
             <span className='mr-1 nav_cart'>Cart</span>
-            <span className='mr-3 nav_cart_item_count'>10</span>
+            <span className='mr-3 nav_cart_item_count'>{cartItems.length}</span>
           </Link>
         </Col>
         <Col
