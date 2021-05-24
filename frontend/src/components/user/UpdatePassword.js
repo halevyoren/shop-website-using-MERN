@@ -47,7 +47,7 @@ const UpdatePassword = ({ history }) => {
       <Helmet>
         <title>Update Password</title>
       </Helmet>
-      <div className='login-form wrapper'>
+      <div className='user-form wrapper'>
         <Form
           className='shadow-lg col-12 col-lg-7 px-4 py-5'
           onSubmit={submitHandler}

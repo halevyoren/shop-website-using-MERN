@@ -17,7 +17,7 @@ const Profile = () => {
           <Helmet>
             <title>Your Profile</title>
           </Helmet>
-          <Row>
+          <Row className='mb-5'>
             <Col>
               <h2 className='mt-5 ml-5'>My Profile</h2>
               <Figure className='w-100 d-flex-column align-items-center justify-content-center'>

@@ -82,7 +82,7 @@ const Register = ({ history }) => {
           <Helmet>
             <title>Register</title>
           </Helmet>
-          <div className='login-form wrapper '>
+          <div className='user-form wrapper '>
             <Form
               className='shadow-lg col-12 col-lg-7 p-4'
               onSubmit={submitHandler}
