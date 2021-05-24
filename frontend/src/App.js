@@ -11,6 +11,7 @@ import Register from './components/user/Register';
 import Profile from './components/user/Profile';
 import UpdateProfile from './components/user/UpdateProfile';
 import UpdatePassword from './components/user/UpdatePassword';
+import ForgotPassword from './components/user/ForgotPassword';
 
 import ProtectedRoute from './components/route/ProtectedRoute';
 
@@ -28,12 +29,13 @@ function App() {
     <Router>
       <div className='App'>
         <Header />
-        <div className='m-5'>
+        <div className='pb-5 px-5'>
           <Route path='/' exact component={Home} />
           <Route path='/search/:keyword' component={Home} />
           <Route path='/products/:id' exact component={ProductDetails} />
           <Route path='/login' exact component={Login} />
           <Route path='/register' exact component={Register} />
+          <Route path='/password/forgot' exact component={ForgotPassword} />
           <ProtectedRoute path='/me' exact component={Profile} />
           <ProtectedRoute path='/me/update' exact component={UpdateProfile} />
           <ProtectedRoute

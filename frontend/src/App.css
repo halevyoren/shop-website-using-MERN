@@ -1,3 +1,7 @@
+.App {
+  min-height: 100vh;
+  position: relative;
+}
 .container.container-fluid {
   margin: 3rem;
 }
@@ -27,6 +31,14 @@
   color: black;
   font-weight: bold;
   font-size: 0.9rem;
+}
+
+.footer {
+  /* clear: both; */
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  /* margin-top: -200px; */
 }
 
 .input-group {
@@ -67,7 +79,7 @@
 .login-btn,
 .add-to-cart-btn,
 .submit-review-btn,
-.login-form Button {
+.user-form Button {
   border-radius: 20px;
   background-color: orange;
   border-color: orange;
@@ -131,12 +143,12 @@
   font-weight: 700;
 }
 
-.login-form Button,
+.user-form Button,
 .login-btn {
   border-radius: 5px;
 }
 
-.login-form a {
+.user-form a {
   color: gray;
 }
 
@@ -183,8 +195,10 @@
   font-size: 1.2rem;
 }
 
-.login-form {
+.user-form {
   max-width: 850px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 5rem;
+  margin-top: 3rem;
 }
