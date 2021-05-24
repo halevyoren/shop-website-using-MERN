@@ -47,7 +47,7 @@ const Header = () => {
           </Link>
         </Col>
         <Col
-          md={2}
+          md={user ? 2 : 1}
           className='d-flex align-items-center justify-content-center py-2'
         >
           {user ? (
