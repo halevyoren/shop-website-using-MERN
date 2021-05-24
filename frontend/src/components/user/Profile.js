@@ -25,8 +25,8 @@ const Profile = () => {
                   width={250}
                   height={250}
                   className='rounded-circle img-fluid avatar center'
-                  alt={user.name}
-                  src={user.avatar.url}
+                  alt={user && user.name}
+                  src={user && user.avatar && user.avatar.url}
                 />
                 <Figure.Caption>
                   <Link
@@ -40,7 +40,7 @@ const Profile = () => {
               </Figure>
             </Col>
 
-            <Col className='my-auto'>
+            <Col className='my-auto profile-details'>
               <h4 className='mt-5'>Full Name</h4>
               <p>{user.name}</p>
 

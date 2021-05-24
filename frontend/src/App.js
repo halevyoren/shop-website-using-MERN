@@ -9,6 +9,8 @@ import ProductDetails from './components/product/ProductDetails';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Profile from './components/user/Profile';
+import UpdateProfile from './components/user/UpdateProfile';
+
 import ProtectedRoute from './components/route/ProtectedRoute';
 
 import { loadUser } from './actions/userActions';
@@ -32,6 +34,7 @@ function App() {
           <Route path='/login' exact component={Login} />
           <Route path='/register' exact component={Register} />
           <ProtectedRoute path='/me' exact component={Profile} />
+          <ProtectedRoute path='/me/update' exact component={UpdateProfile} />
         </div>
         <Footer />
       </div>
