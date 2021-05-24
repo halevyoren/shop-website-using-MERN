@@ -1,16 +1,18 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import ReactStars from 'react-rating-stars-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { Carousel } from 'react-bootstrap';
 import { getProductDetails, clearErrors } from '../../actions/productActions';
+import { addItemToCart } from '../../actions/cartActions';
 import SubmitReviewModal from '../modals/SubmitReviewModal';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import { Helmet } from 'react-helmet';
 
 const ProductDetails = ({ match }) => {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   const alert = useAlert();
   const { loading, error, product } = useSelector(
@@ -25,6 +27,19 @@ const ProductDetails = ({ match }) => {
       dispatch(clearErrors());
     }
   }, [alert, dispatch, error, match.params.id]);
+
+  const increaseQuantity = () => {
+    if (quantity < product.stock) setQuantity((qty) => qty + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) setQuantity((qty) => qty - 1);
+  };
+
+  const addToCart = () => {
+    dispatch(addItemToCart(match.params.id, quantity));
+    alert.success('Item added to cart');
+  };
 
   return (
     <Fragment>
@@ -79,14 +94,25 @@ const ProductDetails = ({ match }) => {
 
               {/* amount of product and adding to cart */}
               <div className='stockCounter d-flex align-items-center'>
-                <Button className='btn btn-danger'>-</Button>
+                <Button className='btn btn-danger' onClick={decreaseQuantity}>
+                  -
+                </Button>
 
-                <input type='number' value='1' readOnly />
+                <input
+                  type='number'
+                  className='count ml-1'
+                  value={quantity}
+                  readOnly
+                />
 
-                <Button className='btn btn-primary'>+</Button>
+                <Button className='btn btn-primary' onClick={increaseQuantity}>
+                  +
+                </Button>
                 <Button
                   id='cart_btn'
                   className='btn btn-primary ml-4 px-4 add-to-cart-btn'
+                  disabled={product.stock === 0}
+                  onClick={addToCart}
                 >
                   Add to Cart
                 </Button>
