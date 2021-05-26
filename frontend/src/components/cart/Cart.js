@@ -6,7 +6,7 @@ import { addItemToCart, removeItemFromCart } from '../../actions/cartActions';
 import { FaTrashAlt } from 'react-icons/fa';
 import { Button, Col, Row } from 'react-bootstrap';
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -23,6 +23,10 @@ const Cart = () => {
   const decreaseQuantity = (id, quantity) => {
     const newQuantity = quantity - 1;
     if (newQuantity > 0) dispatch(addItemToCart(id, newQuantity));
+  };
+
+  const checkoutHandler = () => {
+    history.push('/login?redirect=shipping');
   };
 
   return (
@@ -147,11 +151,25 @@ const Cart = () => {
                 <hr />
                 <p>
                   Subtotal:{' '}
-                  <span className='order-summary-values'>3 (Units)</span>
+                  <span className='order-summary-values'>
+                    {cartItems.reduce((acc, item) => acc + item.quantity, 0)}{' '}
+                    (Units)
+                  </span>
                 </p>
                 <p>
                   Est. total:{' '}
-                  <span className='order-summary-values'>$765.56</span>
+                  <span className='order-summary-values'>
+                    {cartItems
+                      .reduce(
+                        (acc, item) => acc + item.quantity * item.price,
+                        0
+                      )
+                      // converting sum of product's price to money
+                      .toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                      })}
+                  </span>
                 </p>
 
                 <hr />
@@ -159,6 +177,7 @@ const Cart = () => {
                   <Button
                     id='checkout_btn'
                     className='btn cart-btn px-5 py-2 text-white'
+                    onClick={checkoutHandler}
                   >
                     Check out
                   </Button>

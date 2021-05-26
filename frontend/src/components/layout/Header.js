@@ -34,7 +34,7 @@ const Header = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
-        <Col>
+        <Col md={9}>
           <Route render={({ history }) => <Search history={history} />} />
         </Col>
         <Col
@@ -48,8 +48,8 @@ const Header = () => {
           </Link>
         </Col>
         <Col
-          md={user ? 2 : 1}
-          className='d-flex align-items-center justify-content-center py-2'
+          md={1}
+          className='d-flex align-items-center justify-content-center py-2 px-0'
         >
           {user ? (
             <NavDropdown
@@ -99,9 +99,11 @@ const Header = () => {
             </NavDropdown>
           ) : (
             !loading && (
-              <Link to='/login'>
-                <Button className='login-btn border-0'>Login</Button>
-              </Link>
+              <Col>
+                <Link to='/login'>
+                  <Button className='login-btn border-0 pr-2'>Login</Button>
+                </Link>
+              </Col>
             )
           )}
           {/* </div> */}
