@@ -24,9 +24,11 @@ const reducer = combineReducers({
 
 let initialState = {
   cart: {
+    // If there are items on the local storage then load them to the cart items array
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
+    // If there is shipping informtion on the local storage then load it to the shipping info
     shippingInfo: localStorage.getItem('shippingInfo')
       ? JSON.parse(localStorage.getItem('shippingInfo'))
       : {}

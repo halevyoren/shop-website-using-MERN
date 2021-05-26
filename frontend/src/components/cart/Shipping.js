@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { countries } from 'countries-list';
 import { saveShippingInfo } from '../../actions/cartActions';
+import CheckoutSteps from './CheckoutSteps';
 // import { Button, Col, Row } from 'react-bootstrap';
 
 const Shipping = ({ history }) => {
@@ -32,6 +33,7 @@ const Shipping = ({ history }) => {
       <Helmet>
         <title>Shipping Info</title>
       </Helmet>
+      <CheckoutSteps shipping />
       <div className='user-form wrapper '>
         <Form
           className='shadow-lg col-12 col-lg-7 p-4'
