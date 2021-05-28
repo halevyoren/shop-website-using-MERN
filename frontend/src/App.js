@@ -8,6 +8,7 @@ import Header from './components/layout/Header';
 import Home from './components/Home';
 import Cart from './components/cart/Cart';
 import Shipping from './components/cart/Shipping';
+import ConfirmOrder from './components/cart/ConfirmOrder';
 
 import Login from './components/user/Login';
 import Register from './components/user/Register';
@@ -47,6 +48,11 @@ function App() {
 
           <Route path='/cart' exact component={Cart} />
           <ProtectedRoute path='/shipping' exact component={Shipping} />
+          <ProtectedRoute
+            path='/order/confirm'
+            exact
+            component={ConfirmOrder}
+          />
           <ProtectedRoute path='/me/update' exact component={UpdateProfile} />
           <ProtectedRoute path='/me' exact component={Profile} />
           <ProtectedRoute path='/me/update' exact component={UpdateProfile} />

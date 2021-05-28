@@ -117,7 +117,7 @@ const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
-// @route   POST password/reset/:token
+// @route   POST api/password/reset/:token
 // @desc    Reset password
 // @access  Public
 const resetPassword = catchAsyncErrors(async (req, res, next) => {
