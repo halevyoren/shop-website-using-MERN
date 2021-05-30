@@ -6,15 +6,15 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // @desc    Process stripe payment
 // @access  admin
 exports.processPayment = catchAsyncErrors(async (req, res, next) => {
-  const paymentIntent = await stripe.paymentIntent.create({
+  const paymentIntent = await stripe.paymentIntents.create({
     amount: req.body.amount,
     currency: 'usd',
     metadata: { integration_check: 'accept_a_payment' }
   });
 
   res.status(200).json({
-    sccess: true,
-    client_Secret: paymentIntent.client_Secret
+    success: true,
+    client_secret: paymentIntent.client_secret
   });
 });
 
