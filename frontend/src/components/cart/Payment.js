@@ -33,7 +33,58 @@ const Payment = ({ history }) => {
 
   useEffect(() => {}, []);
 
-  const submitHandler = () => {};
+  const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
+  const paymentData = {
+    amount: Math.round(orderInfo.totalPrice * 100) // amount in cents
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    document.querySelector('#pay_btn').disabled = true;
+
+    let res;
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      res = await axios.post('/api/payment/process', paymentData, config);
+
+      const clientSecret = res.data.client_secret;
+      if (!stripe || !elements) {
+        return;
+      }
+
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardNumberElement),
+          billing_details: {
+            name: user.name,
+            email: user.email
+          }
+        }
+      });
+      if (result.error) {
+        alert.error(result.error.message);
+        document.querySelector('#pay_btn').disabled = false;
+      } else {
+        // Check if the payment was processed
+        if (result.paymentIntent.status === 'succeeded') {
+          //TODO - New Order
+
+          history.push('/success');
+        } else {
+          alert.error('There was an issue processing the payment');
+        }
+      }
+    } catch (error) {
+      document.querySelector('#pay_btn').disabled = false;
+      alert.error(error.response.data.message);
+    }
+  };
 
   return (
     <Fragment>
@@ -75,8 +126,12 @@ const Payment = ({ history }) => {
             />
           </Form.Group>
 
-          <Button className='btn btn-lg py-3 w-100 text-white' type='submit'>
-            Pay
+          <Button
+            className='btn btn-lg py-3 w-100 text-white'
+            id='pay_btn'
+            type='submit'
+          >
+            Pay {` - $${orderInfo && orderInfo.totalPrice}`}
           </Button>
         </Form>
       </div>
