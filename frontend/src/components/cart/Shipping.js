@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { countries } from 'countries-list';
 import { saveShippingInfo } from '../../actions/cartActions';
 import CheckoutSteps from './CheckoutSteps';
-// import { Button, Col, Row } from 'react-bootstrap';
 
 const Shipping = ({ history }) => {
   const dispatch = useDispatch();
