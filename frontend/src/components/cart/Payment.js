@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from './CheckoutSteps';
 import { useAlert } from 'react-alert';
 import axios from 'axios';
+import { createOrder, clearErrors } from '../../actions/orderActions';
 
 import {
   useStripe,
@@ -30,10 +31,28 @@ const Payment = ({ history }) => {
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems, shippingInfo } = useSelector((state) => state.cart);
+  const { error } = useSelector((state) => state.newOrder);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [alert, dispatch, error]);
+
+  const order = {
+    orderItems: cartItems,
+    shippingInfo
+  };
 
   const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
+  if (orderInfo) {
+    order.itemsPrice = orderInfo.itemsPrice;
+    order.shippingPrice = orderInfo.shippingPrice;
+    order.taxPrice = orderInfo.taxPrice.toFixed(2);
+    order.totalPrice = orderInfo.totalPrice.toFixed(2);
+  }
+
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100) // amount in cents
   };
@@ -73,7 +92,13 @@ const Payment = ({ history }) => {
       } else {
         // Check if the payment was processed
         if (result.paymentIntent.status === 'succeeded') {
-          //TODO - New Order
+          //New Order
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status
+          };
+
+          dispatch(createOrder(order));
 
           history.push('/success');
         } else {
@@ -131,7 +156,7 @@ const Payment = ({ history }) => {
             id='pay_btn'
             type='submit'
           >
-            Pay {` - $${orderInfo && orderInfo.totalPrice}`}
+            Pay {` - $${orderInfo && orderInfo.totalPrice.toFixed(2)}`}
           </Button>
         </Form>
       </div>
