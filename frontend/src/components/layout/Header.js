@@ -41,7 +41,6 @@ const Header = () => {
           md={1}
           className='d-flex align-items-center justify-content-center my-3'
         >
-          {/* <div className='text-center d-flex align-items-center justify-content-center py-2'> */}
           <Link to='/cart' className='cart-link'>
             <span className='mr-1 nav_cart'>Cart</span>
             <span className='mr-3 nav_cart_item_count'>{cartItems.length}</span>
@@ -77,17 +76,15 @@ const Header = () => {
               <NavDropdown.Item as={Link} to='/me'>
                 Profile
               </NavDropdown.Item>
-              {/* <NavDropdown.Item divider /> */}
 
-              {user && user.role !== 'admin' ? (
-                <NavDropdown.Item as={Link} to='/orders/me'>
-                  Orders
-                </NavDropdown.Item>
-              ) : (
+              {user && user.role !== 'admin' && (
                 <NavDropdown.Item as={Link} to='/dashdash'>
                   Dashdash
                 </NavDropdown.Item>
               )}
+              <NavDropdown.Item as={Link} to='/orders/me'>
+                Orders
+              </NavDropdown.Item>
               <NavDropdown.Item
                 as={Link}
                 to='/'
@@ -106,7 +103,6 @@ const Header = () => {
               </Col>
             )
           )}
-          {/* </div> */}
         </Col>
       </Navbar.Collapse>
     </Navbar>
