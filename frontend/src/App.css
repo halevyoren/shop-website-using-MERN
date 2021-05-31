@@ -309,3 +309,8 @@
   white-space: nowrap;
   display: inline-block;
 }
+
+.order-success,
+.order-success .row {
+  height: 80vh;
+}
