@@ -2,11 +2,12 @@ import React from 'react';
 import { Navbar, Button, Col, Figure, NavDropdown } from 'react-bootstrap';
 import { Link, Route } from 'react-router-dom';
 import Search from './Search';
-import LogoImg from '../../images/shop-logo.jpg';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { IoMdArrowDropdown } from "react-icons/io";
+
+import LogoImg from '../../images/shop-logo.jpg';
 import { logout } from '../../actions/userActions';
 
 const Header = () => {
@@ -61,12 +62,12 @@ const Header = () => {
                     src={user.avatar && user.avatar.url}
                     alt={user && user.name}
                   />
-                  &nbsp; &nbsp;
+                  &nbsp;
                   <Figure.Caption
                     className='text-white'
                     style={{ fontSize: '1.2rem' }}
                   >
-                    {user && user.name && user.name.split(' ')[0]}
+                    {user && user.name && user.name.split(' ')[0]}<IoMdArrowDropdown />
                   </Figure.Caption>
                 </Figure>
               }
