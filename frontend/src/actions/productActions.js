@@ -7,7 +7,6 @@ import {
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
   NEW_REVIEW_REQUEST,
-  NEW_REVIEW_RESET,
   NEW_REVIEW_SUCCESS,
   NEW_REVIEW_FAIL,
   CLEAR_ERRORS
@@ -78,7 +77,11 @@ export const newReview = (reviewData) => async (dispatch) => {
       }
     };
 
-    const { data } = await axios.put(`/api/review`, reviewData, config);
+    const { data } = await axios.put(
+      '/api/products/review',
+      reviewData,
+      config
+    );
 
     dispatch({
       type: NEW_REVIEW_SUCCESS,
