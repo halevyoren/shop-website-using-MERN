@@ -4,17 +4,24 @@ import ReactStars from 'react-rating-stars-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { Carousel } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
+
 import { getProductDetails, clearErrors } from '../../actions/productActions';
+import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 import { addItemToCart } from '../../actions/cartActions';
 import SubmitReviewModal from '../modals/SubmitReviewModal';
 import LoadingSpinner from '../layout/LoadingSpinner';
-import { Helmet } from 'react-helmet';
 
 const ProductDetails = ({ match }) => {
   const [modalShow, setModalShow] = useState(false);
   const [quantity, setQuantity] = useState(1);
+
   const dispatch = useDispatch();
   const alert = useAlert();
+  const { user } = useSelector((state) => state.auth);
+  const { error: reviewError, success } = useSelector(
+    (state) => state.newReview
+  );
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
@@ -26,7 +33,19 @@ const ProductDetails = ({ match }) => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [alert, dispatch, error, match.params.id]);
+
+    if (reviewError) {
+      alert.error(reviewError);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      alert.success('Review posted successfully');
+      dispatch({
+        type: NEW_REVIEW_RESET
+      });
+    }
+  }, [alert, dispatch, error, match.params.id, reviewError, success]);
 
   const increaseQuantity = () => {
     if (quantity < product.stock) setQuantity((qty) => qty + 1);
@@ -149,16 +168,27 @@ const ProductDetails = ({ match }) => {
                 Sold by: <strong>Amazon</strong>
               </p>
 
-              <Button
-                className='submit-review-btn'
-                onClick={() => setModalShow(true)}
-              >
-                Submit Yout Review
-              </Button>
+              {user ? (
+                <Button
+                  className='submit-review-btn'
+                  onClick={() => setModalShow(true)}
+                >
+                  Submit Yout Review
+                </Button>
+              ) : (
+                <div
+                  className='alert alert-danger mt-5'
+                  type='alert'
+                  style={{ textAlign: 'center' }}
+                >
+                  You must login in order to post your review.
+                </div>
+              )}
 
               <SubmitReviewModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
+                product_id={match.params.id}
               />
             </Col>
           </Row>
