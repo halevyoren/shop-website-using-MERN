@@ -12,6 +12,9 @@ import ConfirmOrder from './components/cart/ConfirmOrder';
 import Payment from './components/cart/Payment';
 import OrderSuccess from './components/cart/OrderSuccess';
 
+import ListOrders from './components/order/ListOrders';
+import OrderDetails from './components/order/OrderDetails';
+
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 
@@ -52,7 +55,7 @@ function App() {
     <Router>
       <div className='App'>
         <Header />
-        <div className='pb-5 px-5'>
+        <div className='content-container'>
           <Route path='/' exact component={Home} />
           <Route path='/search/:keyword' component={Home} />
           <Route path='/products/:id' exact component={ProductDetails} />
@@ -82,6 +85,12 @@ function App() {
             path='/password/update'
             exact
             component={UpdatePassword}
+          />
+          <ProtectedRoute path='/orders/me' exact component={ListOrders} />
+          <ProtectedRoute
+            path='/orders/me/:order_id'
+            exact
+            component={OrderDetails}
           />
         </div>
         <Footer />
