@@ -314,3 +314,29 @@
 .order-success .row {
   height: 80vh;
 }
+
+.order-details-personal-info p,
+.order-details-personal-info a {
+  font-size: 1.5rem;
+}
+.order-details-personal-info p {
+  margin-left: 1.5rem;
+}
+.content-container {
+  padding: 3rem;
+}
+
+@media (max-width: 700px) {
+  .order-details-order-number {
+    font-size: 1.5rem;
+  }
+
+  .order-details-personal-info p,
+  .order-details-personal-info a {
+    font-size: 1.3rem;
+  }
+
+  .content-container {
+    padding: 3rem 1.5rem;
+  }
+}
