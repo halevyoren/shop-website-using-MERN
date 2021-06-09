@@ -199,7 +199,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `/password/reset/${token}`,
+      `/password/reset/${token}`, 
       passwords,
       config
     );
