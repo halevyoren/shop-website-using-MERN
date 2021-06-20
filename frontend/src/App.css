@@ -192,6 +192,10 @@
   margin-right: auto;
   width: 50%;
 }
+.center-icons {
+  display: flex;
+  justify-content: space-around;
+}
 
 .profile-details p {
   font-size: 1.2rem;
@@ -323,7 +327,49 @@
   margin-left: 1.5rem;
 }
 .content-container {
-  padding: 3rem;
+  padding: 1.5rem;
+}
+
+.review-username {
+  font-size: 0.8rem;
+  color: grey;
+}
+
+/* Admin Sidebar */
+
+.sidebar-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+
+  margin-top: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+#sidebar {
+  min-width: 100%;
+  max-width: 100%;
+  background: #232f3e;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+  color: white;
+  text-decoration: none;
+}
+#sidebar ul li a:hover {
+  color: #232f3e;
+  background: #fff;
+}
+
+ul ul a {
+  padding-left: 30px !important;
 }
 
 @media (max-width: 700px) {
@@ -339,9 +385,4 @@
   .content-container {
     padding: 3rem 1.5rem;
   }
-}
-
-.review-username {
-  font-size: 0.8rem;
-  color: grey;
 }
