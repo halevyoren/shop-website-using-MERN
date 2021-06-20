@@ -3,6 +3,9 @@ import {
   GET_ALL_PRODUCTS_REQUEST,
   GET_ALL_PRODUCTS_SUCCESS,
   GET_ALL_PRODUCTS_FAIL,
+  ADMIN_PRODUCTS_REQUEST,
+  ADMIN_PRODUCTS_SUCCESS,
+  ADMIN_PRODUCTS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -42,6 +45,7 @@ export const getAllProducts =
       });
     }
   };
+  
 
 //Get Product details
 export const getProductDetails = (product_id) => async (dispatch) => {
@@ -90,6 +94,27 @@ export const newReview = (reviewData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_REVIEW_FAIL,
+      payload: error.response.data.message
+    });
+  }
+};
+
+//Get Product details
+export const getAdminProducts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADMIN_PRODUCTS_REQUEST
+    });
+
+    const { data } = await axios.get(`/api/products/admin/all`);
+
+    dispatch({
+      type: ADMIN_PRODUCTS_SUCCESS,
+      payload: data.products
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCTS_FAIL,
       payload: error.response.data.message
     });
   }
