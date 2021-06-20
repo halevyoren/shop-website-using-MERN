@@ -31,6 +31,18 @@ const getProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// @route   GET api/products/admin/all
+// @desc    Getting all products from everyone (Admin)
+// @access  Private
+const getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(200).json({
+    success: true,
+    products
+  });
+});
+
 // @route   GET api/products/:product_id
 // @desc    Get product by id
 // @access  Public
@@ -202,6 +214,7 @@ const deleteReview = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProducts = getProducts;
+exports.getAdminProducts = getAdminProducts;
 exports.newProduct = newProduct;
 exports.getProductById = getProductById;
 exports.updateProduct = updateProduct;
