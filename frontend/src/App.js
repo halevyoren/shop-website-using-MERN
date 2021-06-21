@@ -30,6 +30,8 @@ import ResetPassword from './components/user/ResetPassword';
 
 // Admin imports
 import Dashboard from './components/admin/Dashboard';
+import ProductList from './components/admin/ProductList';
+import NewPorduct from './components/admin/NewPorduct';
 
 import ProtectedRoute from './components/route/ProtectedRoute';
 
@@ -42,7 +44,6 @@ import axios from 'axios';
 // Payment imports
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import ProductList from './components/admin/ProductList';
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState('');
@@ -72,6 +73,12 @@ function App() {
           exact
           isAdmin={true}
           component={ProductList}
+        />
+        <ProtectedRoute
+          path='/products/admin/new'
+          exact
+          isAdmin={true}
+          component={NewPorduct}
         />
         <div className='content-container'>
           <Route path='/' exact component={Home} />
