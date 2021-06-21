@@ -42,7 +42,7 @@ const Sidebar = () => {
                 </li>
 
                 <li>
-                  <Link to='/admin/product'>
+                  <Link to='/products/admin/new'>
                     <FaPlusCircle /> Create
                   </Link>
                 </li>
