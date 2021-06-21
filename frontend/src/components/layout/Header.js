@@ -78,9 +78,9 @@ const Header = () => {
                 Profile
               </NavDropdown.Item>
 
-              {user && user.role !== 'admin' && (
-                <NavDropdown.Item as={Link} to='/dashdash'>
-                  Dashdash
+              {user && user.role === 'admin' && (
+                <NavDropdown.Item as={Link} to='/dashboard'>
+                  Dashboard
                 </NavDropdown.Item>
               )}
               <NavDropdown.Item as={Link} to='/orders/me'>
