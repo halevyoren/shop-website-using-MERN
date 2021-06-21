@@ -6,7 +6,8 @@ import {
   FaClipboardList,
   FaPlusCircle,
   FaShoppingBasket,
-  FaUsers
+  FaUsers,
+  FaStar
 } from 'react-icons/fa';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 
@@ -64,7 +65,7 @@ const Sidebar = () => {
 
           <li>
             <Link to='/admin/reviews'>
-              <FaUsers /> Reviews
+              <FaStar /> Reviews
             </Link>
           </li>
         </ul>
