@@ -73,17 +73,17 @@ const newProduct = catchAsyncErrors(async (req, res, next) => {
   }
 
   let imagesLinks = [];
-  
+
   for (let i = 0; i < images.length; i++) {
     const result = await cloudinary.v2.uploader.upload(images[i], {
-        folder: 'shop/products'
+      folder: 'shop/products'
     });
 
     imagesLinks.push({
-        public_id: result.public_id,
-        url: result.secure_url
-    })
-}
+      public_id: result.public_id,
+      url: result.secure_url
+    });
+  }
 
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
@@ -96,7 +96,7 @@ const newProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// @route   PUT api/products/admin/:product_id
+// @route   PUT api/products/admin/update/:product_id
 // @desc    Updating product
 // @access  Private
 const updateProduct = catchAsyncErrors(async (req, res, next) => {
@@ -104,6 +104,39 @@ const updateProduct = catchAsyncErrors(async (req, res, next) => {
 
   if (!product) {
     return next(new ErrorHandler('Product not found', 404));
+  }
+
+  let images = [];
+  // if only one image is uploaded then it will be received as a string else it will be an array
+  if (typeof req.body.images === 'string') {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
+
+  if (images !== undefined) {
+    // Deleting old images associated with the products
+    for (let i = 0; i < product.images.length; i++) {
+      const result = await cloudinary.v2.uploader.destroy(
+        product.images[i].public_id
+      );
+    }
+
+    // Updloading new images
+    let imagesLinks = [];
+
+    for (let i = 0; i < images.length; i++) {
+      const result = await cloudinary.v2.uploader.upload(images[i], {
+        folder: 'shop/products'
+      });
+
+      imagesLinks.push({
+        public_id: result.public_id,
+        url: result.secure_url
+      });
+    }
+
+    req.body.images = imagesLinks;
   }
 
   product = await Product.findByIdAndUpdate(req.params.product_id, req.body, {
@@ -129,8 +162,10 @@ const deleteProduct = catchAsyncErrors(async (req, res, next) => {
   }
 
   // Deleting images associated with the products
-  for(let i = 0; i < product.images.length; i++) {
-    const result = await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+  for (let i = 0; i < product.images.length; i++) {
+    const result = await cloudinary.v2.uploader.destroy(
+      product.images[i].public_id
+    );
   }
 
   product.remove();
