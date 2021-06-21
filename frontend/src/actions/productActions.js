@@ -62,7 +62,7 @@ export const newProduct = (productData) => async (dispatch) => {
       }
     };
 
-    const { data } = await axios.put(
+    const { data } = await axios.post(
       '/api/products/admin/new',
       productData,
       config
