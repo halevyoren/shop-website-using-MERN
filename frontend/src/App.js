@@ -32,6 +32,7 @@ import ResetPassword from './components/user/ResetPassword';
 import Dashboard from './components/admin/Dashboard';
 import ProductList from './components/admin/ProductList';
 import NewPorduct from './components/admin/NewPorduct';
+import UpdatePorduct from './components/admin/UpdateProduct';
 
 import ProtectedRoute from './components/route/ProtectedRoute';
 
@@ -79,6 +80,12 @@ function App() {
           exact
           isAdmin={true}
           component={NewPorduct}
+        />
+        <ProtectedRoute
+          path='/products/admin/update/:product_id'
+          exact
+          isAdmin={true}
+          component={UpdatePorduct}
         />
         <div className='content-container'>
           <Route path='/' exact component={Home} />
