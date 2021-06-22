@@ -35,13 +35,18 @@ const ListOrdert = () => {
           sort: 'asc'
         },
         {
-          label: 'Num of Items',
-          field: 'numOfItems',
+          label: 'Created At',
+          field: 'createdAt',
           sort: 'asc'
         },
         {
           label: 'Amount',
           field: 'amount',
+          sort: 'asc'
+        },
+        {
+          label: 'Num of Items',
+          field: 'numOfItems',
           sort: 'asc'
         },
         {
@@ -62,8 +67,9 @@ const ListOrdert = () => {
       orders.forEach((order) => {
         data.rows.push({
           id: order._id,
-          numOfItems: order.orderItems.length,
+          createdAt: new Date(order.createdAt).toDateString(),
           amount: `$${order.totalPrice.toFixed(2)}`,
+          numOfItems: order.orderItems.length,
           status:
             order.orderStatus &&
             String(order.orderStatus).includes('Delivered') ? (

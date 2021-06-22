@@ -52,6 +52,10 @@ const OrderDetails = ({ match }) => {
               <h1 className='mb-5 order-details-order-number'>
                 Order # {order && order._id}
               </h1>
+              <h3>
+                Order Date: {order && new Date(order.createdAt).toDateString()}
+              </h3>
+              <hr />
               <h4 className='mb-4'>Shipping info</h4>
               <p>
                 <b>name:</b> {user && user.name}
