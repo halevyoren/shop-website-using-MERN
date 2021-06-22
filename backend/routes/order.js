@@ -16,10 +16,10 @@ router.route('/new').post(isAuthenticatedUser, newOrder);
 router.route('/me').get(isAuthenticatedUser, getUserOrders);
 
 router
-  .route('/admin')
+  .route('/admin/all')
   .get(isAuthenticatedUser, authorizeRoles('admin'), getAllOrders);
 router
-  .route('/admin/:order_id')
+  .route('/admin/update/:order_id')
   .put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder)
   .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteOrder);
 
