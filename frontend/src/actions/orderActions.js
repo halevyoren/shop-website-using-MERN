@@ -7,6 +7,9 @@ import {
   MY_ORDERS_REQUEST,
   MY_ORDERS_SUCCESS,
   MY_ORDERS_FAIL,
+  ALL_ORDERS_REQUEST,
+  ALL_ORDERS_SUCCESS,
+  ALL_ORDERS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
@@ -62,7 +65,28 @@ export const myOrders = () => async (dispatch) => {
   }
 };
 
-// Get order details
+// Get all orders - admin
+export const getAllOrders = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: ALL_ORDERS_REQUEST
+    });
+
+    const { data } = await axios.get(`/api/orders/admin/all`);
+
+    dispatch({
+      type: ALL_ORDERS_SUCCESS,
+      payload: {orders : data.orders,totalAmount : data.totalAmount}
+    });
+  } catch (error) {
+    dispatch({
+      type: ALL_ORDERS_FAIL,
+      payload: error.response.data.message
+    });
+  }
+};
+
+// Get all orders details
 export const getOrderDetails = (order_id) => async (dispatch) => {
   try {
     dispatch({
