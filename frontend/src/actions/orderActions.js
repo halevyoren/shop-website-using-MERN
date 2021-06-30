@@ -13,6 +13,9 @@ import {
   UPDATE_ORDER_REQUEST,
   UPDATE_ORDER_SUCCESS,
   UPDATE_ORDER_FAIL,
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
@@ -120,7 +123,6 @@ export const updateOrder = (order_id, orderData) => async (dispatch) => {
         'Content-Type': 'application/json'
       }
     };
-    console.log(`/api/orders/admin/update/${order_id}`);
     const { data } = await axios.put(
       `/api/orders/admin/update/${order_id}`,
       orderData,
@@ -134,6 +136,27 @@ export const updateOrder = (order_id, orderData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_ORDER_FAIL,
+      payload: error.response.data.message
+    });
+  }
+};
+
+// admin - delete order
+export const deleteOrder = (order_id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_ORDER_REQUEST
+    });
+
+    const { data } = await axios.delete(`/api/orders/admin/delete/${order_id}`);
+
+    dispatch({
+      type: DELETE_ORDER_SUCCESS,
+      payload: data.success
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDER_FAIL,
       payload: error.response.data.message
     });
   }
