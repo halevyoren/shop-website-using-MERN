@@ -20,7 +20,9 @@ router
   .get(isAuthenticatedUser, authorizeRoles('admin'), getAllOrders);
 router
   .route('/admin/update/:order_id')
-  .put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder)
+  .put(isAuthenticatedUser, authorizeRoles('admin'), updateOrder);
+router
+  .route('/admin/delete/:order_id')
   .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteOrder);
 
 router.route('/:order_id').get(isAuthenticatedUser, getOrderById);
