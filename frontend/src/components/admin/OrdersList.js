@@ -9,15 +9,20 @@ import { FaTrashAlt, FaEye } from 'react-icons/fa';
 
 import LoadingSpinner from '../layout/LoadingSpinner';
 import Sidebar from './Sidebar';
-import { getAllOrders, clearErrors } from '../../actions/orderActions';
 import { Button, Col, Row } from 'react-bootstrap';
-// import {  } from '../../constants/orderConstatnts';
+import {
+  getAllOrders,
+  clearErrors,
+  deleteOrder
+} from '../../actions/orderActions';
+import { DELETE_ORDER_RESET } from '../../constants/orderConstatnts';
 
-const OrdersList = () => {
+const OrdersList = ({ history }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
   const { loading, error, orders } = useSelector((state) => state.allOrders);
+  const { isDeleted } = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(getAllOrders());
@@ -27,12 +32,16 @@ const OrdersList = () => {
       dispatch(clearErrors());
     }
 
-    // if (isDeleted) {
-    //   alert.success('Product deleted successfully');
-    //   history.push('/products/admin/all');
-    //   dispatch({ type: DELETE_PRODUCT_RESET });
-    // }
-  }, [alert, dispatch, error]);
+    if (isDeleted) {
+      alert.success('Order deleted successfully');
+      history.push('/admin/orders');
+      dispatch({ type: DELETE_ORDER_RESET });
+    }
+  }, [alert, dispatch, error, history, isDeleted]);
+
+  const deleteOrderHandler = (order_id) => {
+    dispatch(deleteOrder(order_id));
+  };
 
   // define the table to view the orders
   const setOrders = () => {
@@ -88,7 +97,12 @@ const OrdersList = () => {
               >
                 <FaEye size='1.2rem' />
               </Link>
-              <Button className='btn btn-danger py-2 ml-2'>
+              <Button
+                className='btn btn-danger py-2 ml-2'
+                onClick={() => {
+                  deleteOrderHandler(order._id);
+                }}
+              >
                 <FaTrashAlt size='1.2rem' />
               </Button>
             </div>
