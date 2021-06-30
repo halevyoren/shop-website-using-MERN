@@ -35,6 +35,7 @@ import NewPorduct from './components/admin/NewPorduct';
 import UpdatePorduct from './components/admin/UpdateProduct';
 import OrdersList from './components/admin/OrdersList';
 import ProcessOrder from './components/admin/ProcessOrder';
+import UsersList from './components/admin/UsersList';
 
 import ProtectedRoute from './components/route/ProtectedRoute';
 
@@ -100,6 +101,12 @@ function App() {
           exact
           isAdmin={true}
           component={ProcessOrder}
+        />
+        <ProtectedRoute
+          path='/admin/users'
+          exact
+          isAdmin={true}
+          component={UsersList}
         />
         <div className='content-container'>
           <Route path='/' exact component={Home} />
