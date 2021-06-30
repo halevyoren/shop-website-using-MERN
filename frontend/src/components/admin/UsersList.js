@@ -113,7 +113,7 @@ const UsersList = ({ history }) => {
         </Col>
         <Col md={10}>
           <Fragment>
-            <h1 className='my-5'>All Orders</h1>
+            <h1 className='my-5'>All Users</h1>
             {loading ? (
               <LoadingSpinner />
             ) : (
