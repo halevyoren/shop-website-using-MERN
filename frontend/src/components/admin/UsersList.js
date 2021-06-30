@@ -10,14 +10,15 @@ import { FaTrashAlt, FaPencilAlt } from 'react-icons/fa';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import Sidebar from './Sidebar';
 import { Button, Col, Row } from 'react-bootstrap';
-import { allUsers, clearErrors } from '../../actions/userActions';
+import { allUsers, clearErrors, deleteUser } from '../../actions/userActions';
+import { DELETE_USER_RESET } from '../../constants/userConstants';
 
 const UsersList = ({ history }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
   const { loading, error, users } = useSelector((state) => state.allUsers);
-  //   const { isDeleted } = useSelector((state) => state.user);
+  const { isDeleted } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(allUsers());
@@ -27,16 +28,16 @@ const UsersList = ({ history }) => {
       dispatch(clearErrors());
     }
 
-    // if (isDeleted) {
-    //   alert.success('Order deleted successfully');
-    //   history.push('/admin/orders');
-    //   dispatch({ type: DELETE_ORDER_RESET });
-    // }
-  }, [alert, dispatch, error, history]);
+    if (isDeleted) {
+      alert.success('User deleted successfully');
+      history.push('/admin/users');
+      dispatch({ type: DELETE_USER_RESET });
+    }
+  }, [alert, dispatch, error, history, isDeleted]);
 
-  //   const deleteOrderHandler = (order_id) => {
-  //     dispatch(deleteOrder(order_id));
-  //   };
+  const deleteUserHandler = (user_id) => {
+    dispatch(deleteUser(user_id));
+  };
 
   // define the table to view the users
   const setUsers = () => {
@@ -88,9 +89,9 @@ const UsersList = ({ history }) => {
               </Link>
               <Button
                 className='btn btn-danger py-2 ml-2'
-                // onClick={() => {
-                //   deleteUserHandler(user._id);
-                // }}
+                onClick={() => {
+                  deleteUserHandler(user._id);
+                }}
               >
                 <FaTrashAlt size='1.2rem' />
               </Button>
