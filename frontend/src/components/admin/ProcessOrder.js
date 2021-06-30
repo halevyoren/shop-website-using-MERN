@@ -97,7 +97,7 @@ const ProcessOrder = ({ match, history }) => {
                     {shippingDetails}
                   </p>
                   <p>
-                    <b>Amount: </b> ${totalPrice}
+                    <b>Amount: </b> ${totalPrice && totalPrice.toFixed(2)}
                   </p>
 
                   <hr />
