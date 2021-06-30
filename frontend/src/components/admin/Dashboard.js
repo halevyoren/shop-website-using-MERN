@@ -8,6 +8,7 @@ import { FaAngleRight } from 'react-icons/fa';
 
 import { getAdminProducts, clearErrors } from '../../actions/productActions';
 import { getAllOrders } from '../../actions/orderActions';
+import { allUsers } from '../../actions/userActions';
 import LoadingSpinner from '../layout/LoadingSpinner';
 import Sidebar from './Sidebar';
 
@@ -16,6 +17,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const { loading, error, products } = useSelector((state) => state.products);
+  const { users } = useSelector((state) => state.allUsers);
   const {
     orders,
     totalAmount,
@@ -32,6 +34,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(getAllOrders());
+    dispatch(allUsers());
 
     if (error) {
       alert.error(error);
@@ -112,7 +115,7 @@ const Dashboard = () => {
                     <div className='card-body'>
                       <div className='text-center card-font-size'>
                         Users
-                        <br /> <b>45</b>
+                        <br /> <b>{users && users.length}</b>
                       </div>
                     </div>
                     <Link
