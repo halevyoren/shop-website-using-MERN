@@ -37,6 +37,7 @@ import OrdersList from './components/admin/OrdersList';
 import ProcessOrder from './components/admin/ProcessOrder';
 import UsersList from './components/admin/UsersList';
 import UpdateUser from './components/admin/UpdateUser';
+import ProductReviews from './components/admin/ProductReviews';
 
 import ProtectedRoute from './components/route/ProtectedRoute';
 
@@ -113,7 +114,13 @@ function App() {
           path='/admin/user/:user_id'
           exact
           isAdmin={true}
-          component={UpdateUser }
+          component={UpdateUser}
+        />
+        <ProtectedRoute
+          path='/admin/reviews'
+          exact
+          isAdmin={true}
+          component={ProductReviews}
         />
         <div className='content-container'>
           <Route path='/' exact component={Home} />
