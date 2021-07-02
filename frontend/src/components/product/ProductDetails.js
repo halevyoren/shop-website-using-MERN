@@ -192,6 +192,31 @@ const ProductDetails = ({ match }) => {
               />
             </Col>
           </Row>
+          <div className='mb-5'>
+            <h3>Other's Reviews:</h3>
+            <hr />
+            {product &&
+              product.reviews &&
+              product.reviews.map((review) => (
+                <div key={review._id} class='review-card my-3'>
+                  <p class='review-username ml-2 mb-0'>{review.name}</p>
+                  <div className='ml-1'>
+                    <ReactStars
+                      count={5}
+                      edit={false}
+                      isHalf={true}
+                      size={30}
+                      value={review.rating || 0}
+                      activeColor='#ffd700'
+                      color='#ddd'
+                    />
+                  </div>
+                  <p class='review_comment ml-3'>{review.comment}</p>
+
+                  <hr />
+                </div>
+              ))}
+          </div>
         </Fragment>
       )}
     </Fragment>
