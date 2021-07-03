@@ -33,7 +33,7 @@ const Register = ({ history }) => {
 
     const formData = new FormData();
     formData.set('name', name);
-    formData.set('email', email);
+    formData.set('email', email.toLowerCase());
     formData.set('password', password);
     formData.set('avatar', avatar);
 
