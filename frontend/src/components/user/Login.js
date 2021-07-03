@@ -19,13 +19,12 @@ const Login = ({ history, location }) => {
     (state) => state.auth
   );
 
-
   // check if there is a location to go to after logging in
-  const redirect = location.search ? location.search.split('=')[1] : '/'
+  const redirect = location.search ? location.search.split('=')[1] : '/';
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(email.toLowerCase(), password));
   };
 
   useEffect(() => {
