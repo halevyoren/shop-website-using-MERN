@@ -6,6 +6,7 @@ import CheckoutSteps from './CheckoutSteps';
 import { useAlert } from 'react-alert';
 import axios from 'axios';
 import { createOrder, clearErrors } from '../../actions/orderActions';
+import { clearCart } from '../../actions/cartActions';
 
 import {
   useStripe,
@@ -90,7 +91,8 @@ const Payment = ({ history }) => {
         alert.error(result.error.message);
         document.querySelector('#pay_btn').disabled = false;
       } else {
-        // Check if the payment was processed
+        dispatch(clearCart());
+
         if (result.paymentIntent.status === 'succeeded') {
           //New Order
           order.paymentInfo = {
@@ -123,6 +125,9 @@ const Payment = ({ history }) => {
           onSubmit={submitHandler}
           encType='multipart/form-data'
         >
+          <Form.Group>
+            <Form.Label>Test Card Number: 4000 0027 6000 3184</Form.Label>
+          </Form.Group>
           <Form.Group>
             <Form.Label>Card Number</Form.Label>
             <Form.Control
