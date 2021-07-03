@@ -4,15 +4,16 @@ import ReactStars from 'react-rating-stars-component';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { Carousel } from 'react-bootstrap';
+import { FaTrashAlt } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 
-import { getProductDetails, clearErrors } from '../../actions/productActions';
+import { getProductDetails, clearErrors, deleteReview } from '../../actions/productActions';
 import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 import { addItemToCart } from '../../actions/cartActions';
 import SubmitReviewModal from '../modals/SubmitReviewModal';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
-const ProductDetails = ({ match }) => {
+const ProductDetails = ({ match, history}) => {
   const [modalShow, setModalShow] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -59,6 +60,11 @@ const ProductDetails = ({ match }) => {
     dispatch(addItemToCart(match.params.id, quantity));
     alert.success('Item added to cart');
   };
+
+  const deleteReviewHandler = (reviewID) => {
+    dispatch(deleteReview(product._id, reviewID));
+  };
+  
 
   return (
     <Fragment>
@@ -212,7 +218,16 @@ const ProductDetails = ({ match }) => {
                     />
                   </div>
                   <p class='review_comment ml-3'>{review.comment}</p>
-
+                  {user && review.user === user._id && (
+                    <Button
+                      className='btn btn-danger py-2 ml-2'
+                      onClick={() => {
+                        deleteReviewHandler(review._id);
+                      }}
+                    >
+                      <FaTrashAlt size='1.2rem' />
+                    </Button>
+                  )}
                   <hr />
                 </div>
               ))}
