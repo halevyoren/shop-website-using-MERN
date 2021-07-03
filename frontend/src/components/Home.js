@@ -110,7 +110,12 @@ const Home = ({ match }) => {
           <Helmet>
             <title>The best store online - Oren's Shop</title>
           </Helmet>
-          <h1 className='mt-4 mb-5'>Last Products</h1>
+          <h1 className='mt-4 mb-5'>
+            {(keyword && category && `${keyword}: ${category}`) ||
+              keyword ||
+              category ||
+              'Last Products'}
+          </h1>
           <Row className='justify-content-center'>
             {keyword ? (
               <Fragment>
@@ -203,6 +208,18 @@ const Home = ({ match }) => {
               />
             </div>
           )}
+          <ul className='home-bottom-categories-list'>
+            {!keyword &&
+              categories.map((category) => (
+                <li
+                  key={category}
+                  onClick={() => categoryHandler(category)}
+                  className='home-bottom-categories-item'
+                >
+                  {category}
+                </li>
+              ))}
+          </ul>
         </div>
       )}
     </Fragment>
