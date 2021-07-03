@@ -8,9 +8,13 @@ import { FaTrashAlt } from 'react-icons/fa';
 
 import Sidebar from './Sidebar';
 import { Button, Col, Row, Form } from 'react-bootstrap';
-import { getProductReviews, clearErrors } from '../../actions/productActions';
+import {
+  getProductReviews,
+  deleteReview,
+  clearErrors
+} from '../../actions/productActions';
 
-// import {DELETE_REVIEW_RESET} from '../../constants/productConstants'
+import { DELETE_REVIEW_RESET } from '../../constants/productConstants';
 
 const ProductReviews = () => {
   const [productId, setProductId] = useState('');
@@ -19,7 +23,7 @@ const ProductReviews = () => {
   const dispatch = useDispatch();
 
   const { error, reviews } = useSelector((state) => state.productReviews);
-
+  const { isDeleted } = useSelector((state) => state.review);
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -30,16 +34,15 @@ const ProductReviews = () => {
       dispatch(getProductReviews(productId));
     }
 
-    // if (isDeleted) {
-    //   alert.success('User deleted successfully');
-    //   history.push('/admin/users');
-    //   dispatch({ type: DELETE_USER_RESET });
-    // }
-  }, [alert, dispatch, error, productId]);
+    if (isDeleted) {
+      alert.success('User deleted successfully');
+      dispatch({ type: DELETE_REVIEW_RESET });
+    }
+  }, [alert, dispatch, error, isDeleted, productId]);
 
-  //   const deleteUserHandler = (user_id) => {
-  //     dispatch(deleteUser(user_id));
-  //   };
+  const deleteReviewHandler = (reviewID) => {
+    dispatch(deleteReview(productId, reviewID));
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -96,7 +99,7 @@ const ProductReviews = () => {
               <Button
                 className='btn btn-danger py-2 ml-2'
                 onClick={() => {
-                  //   deleteReviewHandler(review._id);
+                  deleteReviewHandler(review._id);
                 }}
               >
                 <FaTrashAlt size='1.2rem' />
@@ -114,7 +117,7 @@ const ProductReviews = () => {
       <Helmet>
         <title>Products Reviews</title>
       </Helmet>
-      <Row style={{width:"100%"}}>
+      <Row style={{ width: '100%' }}>
         <Col md={2}>
           <Sidebar />
         </Col>
@@ -133,8 +136,6 @@ const ProductReviews = () => {
                       onChange={(e) => setProductId(e.target.value)}
                     />
                   </Form.Group>
-
-
                 </Form>
               </Col>
             </Row>
