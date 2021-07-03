@@ -5,7 +5,7 @@ import Search from './Search';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAlert } from 'react-alert';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropdown } from 'react-icons/io';
 
 import LogoImg from '../../images/shop-logo.jpg';
 import { logout } from '../../actions/userActions';
@@ -67,7 +67,8 @@ const Header = () => {
                     className='text-white'
                     style={{ fontSize: '1.2rem' }}
                   >
-                    {user && user.name && user.name.split(' ')[0]}<IoMdArrowDropdown />
+                    {user && user.name && user.name.split(' ')[0]}
+                    <IoMdArrowDropdown />
                   </Figure.Caption>
                 </Figure>
               }
@@ -99,7 +100,9 @@ const Header = () => {
             !loading && (
               <Col>
                 <Link to='/login'>
-                  <Button className='login-btn border-0 pr-2'>Login</Button>
+                  <Button className='login-btn border-0 pr-2'>
+                    Login/Register
+                  </Button>
                 </Link>
               </Col>
             )
