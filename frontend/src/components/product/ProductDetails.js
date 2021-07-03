@@ -7,13 +7,17 @@ import { Carousel } from 'react-bootstrap';
 import { FaTrashAlt } from 'react-icons/fa';
 import { Helmet } from 'react-helmet';
 
-import { getProductDetails, clearErrors, deleteReview } from '../../actions/productActions';
+import {
+  getProductDetails,
+  clearErrors,
+  deleteReview
+} from '../../actions/productActions';
 import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 import { addItemToCart } from '../../actions/cartActions';
 import SubmitReviewModal from '../modals/SubmitReviewModal';
 import LoadingSpinner from '../layout/LoadingSpinner';
 
-const ProductDetails = ({ match, history}) => {
+const ProductDetails = ({ match, history }) => {
   const [modalShow, setModalShow] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -61,10 +65,10 @@ const ProductDetails = ({ match, history}) => {
     alert.success('Item added to cart');
   };
 
-  const deleteReviewHandler = (reviewID) => {
-    dispatch(deleteReview(product._id, reviewID));
+  const deleteReviewHandler = async(reviewID) => {
+    await dispatch(deleteReview(product._id, reviewID));
+    dispatch(getProductDetails(match.params.id));
   };
-  
 
   return (
     <Fragment>
