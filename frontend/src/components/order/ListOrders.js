@@ -45,8 +45,8 @@ const ListOrdert = () => {
           sort: 'asc'
         },
         {
-          label: 'Num of Items',
-          field: 'numOfItems',
+          label: 'Num of Products',
+          field: 'numOfProducts',
           sort: 'asc'
         },
         {
@@ -69,7 +69,7 @@ const ListOrdert = () => {
           id: order._id,
           createdAt: new Date(order.createdAt).toDateString(),
           amount: `$${order.totalPrice.toFixed(2)}`,
-          numOfItems: order.orderItems.length,
+          numOfProducts: order.orderItems.length,
           status:
             order.orderStatus &&
             String(order.orderStatus).includes('Delivered') ? (
@@ -80,7 +80,6 @@ const ListOrdert = () => {
           actions: (
             <Link
               to={`/orders/me/${order._id}`}
-              className='center'
               style={{ textDecoration: 'none' }}
             >
               <FaEye size='1.2rem' /> &nbsp; View Order
