@@ -16,7 +16,7 @@ const getProducts = catchAsyncErrors(async (req, res, next) => {
     .search()
     .filter();
 
-  let products = await apiFeatures.query;
+  let products = await apiFeatures.query.sort({$natural:-1});
   const filteredProductsCount = products.length;
 
   apiFeatures.pagination(resPerPage);
