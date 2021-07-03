@@ -32,9 +32,10 @@ const OrderDetails = ({ match }) => {
     }
   }, [alert, dispatch, error, match.params.order_id]);
 
+  console.log(shippingInfo);
   const shippingDetails =
     shippingInfo &&
-    `${shippingInfo.Address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`;
+    `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`;
 
   const isPaid = paymentInfo && paymentInfo.status === 'succeeded';
 
