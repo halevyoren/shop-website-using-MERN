@@ -201,9 +201,12 @@ const updateProfile = catchAsyncErrors(async (req, res, next) => {
   if (req.body.avatar !== '') {
     const user = await User.findById(req.user.id);
 
-    // Remove last image from cloudinary
-    const image_id = user.avatar.public_id;
-    const res = await cloudinary.v2.uploader.destroy(image_id);
+    // Remove user old avatar from cloudinary (exept default image)
+    if (user.avatar.public_id !== process.env.CLOUDINARY_DEFAUL_PUBLIC_ID) {
+      // Remove last image from cloudinary
+      const image_id = user.avatar.public_id;
+      const res = await cloudinary.v2.uploader.destroy(image_id);
+    }
 
     // Upload new image
     const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
@@ -273,8 +276,6 @@ const updateUser = catchAsyncErrors(async (req, res, next) => {
     email: req.body.email,
     role: req.body.role
   };
-
-  // TODO: Update avatar
 
   const user = await User.findByIdAndUpdate(req.params.user_id, newUserData, {
     new: true,
