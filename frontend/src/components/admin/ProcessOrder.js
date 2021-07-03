@@ -61,7 +61,7 @@ const ProcessOrder = ({ match, history }) => {
     `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`;
 
   const isPaid =
-    paymentInfo && paymentInfo.status === 'succceeded' ? true : false;
+    paymentInfo && paymentInfo.status === 'succeeded' ? true : false;
 
   return (
     <Fragment>
