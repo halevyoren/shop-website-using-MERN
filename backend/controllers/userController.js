@@ -12,11 +12,17 @@ const cloudinary = require('cloudinary');
 // @desc    Register a user
 // @access  Public
 const registerUser = catchAsyncErrors(async (req, res, next) => {
-  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: 'shop/avatars',
-    width: 150,
-    crop: 'scale'
-  });
+  const result =
+    req.body.avatar !== ''
+      ? await cloudinary.v2.uploader.upload(req.body.avatar, {
+          folder: 'shop/avatars',
+          width: 150,
+          crop: 'scale'
+        })
+      : {
+          public_id: process.env.CLOUDINARY_DEFAUL_PUBLIC_ID,
+          secure_url: process.env.CLOUDINARY_DEFAUL_URL
+        };
 
   const { name, email, password } = req.body;
 
@@ -296,9 +302,11 @@ const deleteUserById = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Remove user avatar from cloudinary
-  const image_id = user.avatar.public_id;
-  await cloudinary.v2.uploader.destroy(image_id);
+  // Remove user avatar from cloudinary (exept default image)
+  if (user.avatar.public_id !== process.env.CLOUDINARY_DEFAUL_PUBLIC_ID) {
+    const image_id = user.avatar.public_id;
+    await cloudinary.v2.uploader.destroy(image_id);
+  }
 
   await user.remove();
 
